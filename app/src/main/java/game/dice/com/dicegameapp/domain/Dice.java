@@ -8,7 +8,7 @@ public class Dice {
 	private int value;
 
 	public Dice() {
-		value=1;
+		this.value = 1;
 	}
 
 	/*

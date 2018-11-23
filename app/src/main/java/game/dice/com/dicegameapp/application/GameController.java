@@ -1,5 +1,6 @@
 package game.dice.com.dicegameapp.application;
 
+import java.util.ArrayList;
 import java.util.List;
 import game.dice.com.dicegameapp.domain.*;
 import game.dice.com.dicegameapp.persistence.PlayerRepository;
@@ -7,19 +8,42 @@ import game.dice.com.dicegameapp.persistence.PlayerRepository;
 
 public class GameController {
 
-	private Player player;
+	Player player;
 	private PlayerRepository repository = new PlayerRepository();
 
 
-	public GameController() { }
+	public GameController() {
+	}
 
 	/*
 	Getters & setters
 	*/
-	public void createPlayer(String name) { this.player = new Player(name); }
+	public void createPlayer(String name) {
+	    player = new Player(name);
+        repository.addPlayer(player);
+	}
 
-	public String getPlayerName() { return player.getName(); }
+	public String getPlayerName() {
+		List<Player> playerList = repository.getRepository();
+		if (playerList.isEmpty())System.out.println("empty repository!");
+		for (Player player : playerList) {
+			if (player.getName().equals(this.player.getName())) return player.getName();
+		}
+		return "";
+	}
 
+	public void printPlayersName(){
+        List<Player> playerList = repository.getRepository();
+        for (Player player : playerList){
+            System.out.println(player.getName());
+        }
+    }
+
+    public void printGame(){
+	    String resultGame = getPlayerGame();
+
+	    System.out.println(resultGame);
+    }
 	/*
 	* run the game
 	*/
@@ -27,9 +51,15 @@ public class GameController {
 		Game game = new Game();
 		boolean hasWon = game.playGame();
 		player.addGame(game);
-		repository.addPlayer(player);
 		return hasWon;
 	}
+
+	public String getPlayerGame(){
+        List<Game> games = player.getAllGames();
+        Game lastGame = games.get(games.size()-1);
+
+        return "SUMA: " +  lastGame.getSumDices() + " RESULTAT: " + lastGame.hasWon();
+    }
 
 	/*
 	* Convert the last player stats to a string

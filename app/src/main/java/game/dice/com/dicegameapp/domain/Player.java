@@ -13,13 +13,11 @@ public class Player {
 	 */
 	public Player(String name){ this.name=name; }
 	
-	public String getName(){ return name; }
+	public String getName(){ return this.name; }
 
+    public void setName(String name){this.name = name;}
 
 	public void addGame(Game game){ this.games.add(game); }
 
-	public List<Game> getAllGames() {
-		//TODO
-		return games;
-	}
+	public List<Game> getAllGames() { return games; }
 }

@@ -1,9 +1,9 @@
 package game.dice.com.dicegameapp.view;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
-import game.dice.com.dicegameapp.R;
+import game.dice.com.dicegameapp.application.GameController;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -11,5 +11,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        startGame();
+    }
+
+    public void startGame(){
+        GameController controller = new GameController();
+
+        controller.createPlayer("Isaac");
+        controller.printPlayersName();
+        controller.playGame();
+        controller.printGame();
     }
 }
