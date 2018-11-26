@@ -40,10 +40,21 @@ public class GameController {
     }
 
     public void printGame(){
-	    String resultGame = getPlayerGame();
+	    String resultGame = this.getPlayerGame();
 
 	    System.out.println(resultGame);
     }
+
+	public void printGames(){
+		String resultGame = this.getPlayerGamesToString();
+
+		System.out.println(resultGame);
+	}
+
+	public void printPlayerRanking(){
+		double ranking = this.getPlayerRanking();
+		System.out.println("Wins average: " + ranking + "%");
+	}
 	/*
 	* run the game
 	*/
@@ -55,7 +66,7 @@ public class GameController {
 	}
 
 	public String getPlayerGame(){
-        List<Game> games = player.getAllGames();
+        List<Game> games = this.player.getAllGames();
         Game lastGame = games.get(games.size()-1);
 
         return "SUMA: " +  lastGame.getSumDices() + " RESULTAT: " + lastGame.hasWon();
@@ -66,10 +77,10 @@ public class GameController {
 	*/
 	public String getPlayerGamesToString() {
 		String text = "";
-		List<Game> games = player.getAllGames();
+		List<Game> games = this.player.getAllGames();
 
 		for (Game game : games) {
-			text += "SUMA: " + game.getSumDices() + " RESULTAT: " + game.hasWon();
+			text += "SUMA: " + game.getSumDices() + " RESULTAT: " + game.hasWon() + "\n";
 		}
 		return text;
 	}
@@ -78,14 +89,13 @@ public class GameController {
 	* Get the player's stats from the repository
 	*/
 	public double getPlayerRanking() {
-		List<Game> games = player.getAllGames();
+		List<Game> games = this.player.getAllGames();
 
 		double wins = 0.0;
 		for (Game game : games) {
 			if (game.hasWon())
 				wins++;
 		}
-		return wins / games.size();
+		return wins*100 / games.size();
 	}
-
 }

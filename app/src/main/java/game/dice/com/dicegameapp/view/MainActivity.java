@@ -19,8 +19,27 @@ public class MainActivity extends AppCompatActivity {
         GameController controller = new GameController();
 
         controller.createPlayer("Isaac");
-        controller.printPlayersName();
         controller.playGame();
-        controller.printGame();
+        controller.playGame();
+        controller.playGame();
+        controller.playGame();
+        controller.playGame();
+        controller.playGame();
+        controller.playGame();
+        controller.playGame();
+        controller.printGames();
+        controller.printPlayerRanking();
+
+        controller.createPlayer("Juan");
+        controller.playGame();
+        controller.playGame();
+        controller.playGame();
+        controller.playGame();
+        controller.playGame();
+        controller.playGame();
+        controller.playGame();
+        controller.playGame();
+        controller.printGames();
+        controller.printPlayerRanking();
     }
 }
