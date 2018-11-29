@@ -8,6 +8,11 @@ public class Game {
 	public Game(){
 		
 	}
+
+	public int getDice1Value(){ return dice1.getValue(); }
+
+
+	public int getDice2Value(){ return dice2.getValue(); }
 	
 	public boolean playGame() {
 		dice1.rollDice();

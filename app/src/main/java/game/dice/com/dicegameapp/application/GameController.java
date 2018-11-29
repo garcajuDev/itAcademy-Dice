@@ -9,7 +9,7 @@ import game.dice.com.dicegameapp.persistence.PlayerRepository;
 public class GameController {
 
 	Player player;
-	private PlayerRepository repository = new PlayerRepository();
+	private static PlayerRepository repository = new PlayerRepository();
 
 
 	public GameController() {
