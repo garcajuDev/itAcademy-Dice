@@ -29,47 +29,55 @@ public class GameController {
 		for (Player player : playerList) {
 			if (player.getName().equals(this.player.getName())) return player.getName();
 		}
-		return "";
+			return "";
 	}
 
-	public void printPlayersName(){
+
+
+	/*public void printPlayersName(){
         List<Player> playerList = repository.getRepository();
         for (Player player : playerList){
             System.out.println(player.getName());
         }
-    }
+    }*/
 
-    public void printGame(){
+    /*public void printGame(){
 	    String resultGame = this.getPlayerGame();
 
 	    System.out.println(resultGame);
-    }
+    }*/
 
-	public void printGames(){
+	/* public void printGames(){
 		String resultGame = this.getPlayerGamesToString();
 
-		System.out.println(resultGame);
+		//System.out.println(resultGame);
 	}
 
 	public void printPlayerRanking(){
 		double ranking = this.getPlayerRanking();
-		System.out.println("Wins average: " + ranking + "%");
+		//System.out.println("Wins average: " + ranking + "%");
 	}
 	/*
 	* run the game
 	*/
-	public boolean playGame() {
-		Game game = new Game();
+	public int[] playGame() {
+        Game game = new Game();
+        int[] data = {0,0,0};
 		boolean hasWon = game.playGame();
-		player.addGame(game);
-		return hasWon;
+
+		data[0] = game.getDice1Value(); data[1] = game.getDice2Value();
+		if (hasWon == true) data[2] = 1; else data[2] = 0;
+
+		this.player.addGame(game);
+
+			return data;
 	}
 
 	public String getPlayerGame(){
         List<Game> games = this.player.getAllGames();
         Game lastGame = games.get(games.size()-1);
 
-        return "SUMA: " +  lastGame.getSumDices() + " RESULTAT: " + lastGame.hasWon();
+        	return "SUMA: " +  lastGame.getSumDices() + " RESULTAT: " + lastGame.hasWon();
     }
 
 	/*
@@ -82,7 +90,7 @@ public class GameController {
 		for (Game game : games) {
 			text += "SUMA: " + game.getSumDices() + " RESULTAT: " + game.hasWon() + "\n";
 		}
-		return text;
+			return text;
 	}
 
 	/*
@@ -97,5 +105,20 @@ public class GameController {
 				wins++;
 		}
 		return wins*100 / games.size();
+	}
+
+	public boolean existPlayer(String name) {
+		if (repository.playerExists(name) == false) return true;
+
+			return false;
+	}
+
+	public ArrayList<String> playersList(){
+		List<String> playersName = new ArrayList<>();
+		List<Player> playersrepository = repository.getRepository();
+
+		for (Player player : playersrepository) playersName.add(player.getName());
+
+			return (ArrayList<String>) playersName;
 	}
 }

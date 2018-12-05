@@ -10,11 +10,16 @@ public class PlayerRepository {
 
     public PlayerRepository() {}
 
-    public void addPlayer(Player player) {
-        if (!players.contains(player))players.add(player);
-    }
+    public void addPlayer(Player player) {players.add(player);}
 
     public ArrayList<Player> getRepository(){
         return players;
+    }
+
+    public boolean playerExists(String name) {
+        for (Player player : players)
+            if (player.getName().equals(name)) return true;
+
+            return false;
     }
 }

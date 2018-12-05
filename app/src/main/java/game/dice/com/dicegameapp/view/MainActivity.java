@@ -1,45 +1,42 @@
 package game.dice.com.dicegameapp.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import game.dice.com.dicegameapp.application.GameController;
 
+
 public class MainActivity extends AppCompatActivity {
+
+    GameController controller = new GameController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        startGame();
     }
 
-    public void startGame(){
-        GameController controller = new GameController();
+    public void startGame(View View){
+        TextView namePlayer = findViewById(R.id.txtNamePlayer);
+        String name = namePlayer.getText().toString();
 
-        controller.createPlayer("Isaac");
-        controller.playGame();
-        controller.playGame();
-        controller.playGame();
-        controller.playGame();
-        controller.playGame();
-        controller.playGame();
-        controller.playGame();
-        controller.playGame();
-        controller.printGames();
-        controller.printPlayerRanking();
+        if (controller.existPlayer(name) == true)
+            Toast.makeText(this, "New player created!", Toast.LENGTH_LONG )
+                    .show();
 
-        controller.createPlayer("Juan");
-        controller.playGame();
-        controller.playGame();
-        controller.playGame();
-        controller.playGame();
-        controller.playGame();
-        controller.playGame();
-        controller.playGame();
-        controller.playGame();
-        controller.printGames();
-        controller.printPlayerRanking();
+
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("userName", name);
+
+        startActivity(intent);
+    }
+
+    public void onShowStats(View view) {
+        Intent intent = new Intent(this, PlayersActivity.class);
+        startActivity(intent);
     }
 }
