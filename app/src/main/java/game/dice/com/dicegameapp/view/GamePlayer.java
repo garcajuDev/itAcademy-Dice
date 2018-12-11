@@ -26,8 +26,6 @@ public class GamePlayer extends AppCompatActivity {
         gameController = new GameController();
         String name = getIntent().getExtras().getString("name");
 
-        System.out.println("" + name);
-
         gameList = gameController.getPlayerGamesToList(name);
         recyclerGames = findViewById(R.id.recyclerplayergame);
         recyclerGames.setLayoutManager(new LinearLayoutManager(this));

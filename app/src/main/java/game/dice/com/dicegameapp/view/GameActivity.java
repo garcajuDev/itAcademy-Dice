@@ -1,6 +1,5 @@
 package game.dice.com.dicegameapp.view;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -38,8 +37,7 @@ public class GameActivity extends AppCompatActivity {
         int[] game = gameControl.playGame(name);
         int dice1Value = game[0]; int dice2Value = game[1];
 
-        onShowDice1(dice1Value);
-        onShowDice2(dice2Value);
+        onShowDice(dice1Value, dice2Value);
 
         if (game[2] == 1) resultView.setText("You Win!"); else resultView.setText("You Lose");
 
@@ -50,40 +48,19 @@ public class GameActivity extends AppCompatActivity {
         nameview.setText(getIntent().getExtras().getString("userName"));
     }
 
-    private void onShowDice1(int diceValue) {
+    private void onShowDice(int diceValue1, int diceValue2) {
         ImageView dice1 = findViewById(R.id.imgDice1);
-        switch(diceValue){
-            case 1: dice1.setImageResource(R.drawable.one);
-                break;
-            case 2: dice1.setImageResource(R.drawable.two);
-                break;
-            case 3: dice1.setImageResource(R.drawable.three);
-                break;
-            case 4: dice1.setImageResource(R.drawable.four);
-                break;
-            case 5: dice1.setImageResource(R.drawable.five);
-                break;
-            case 6: dice1.setImageResource(R.drawable.six);
-                break;
-        }
-    }
-
-    private void onShowDice2(int diceValue) {
         ImageView dice2 = findViewById(R.id.imgDice2);
-        switch(diceValue){
-            case 1: dice2.setImageResource(R.drawable.one);
-                break;
-            case 2: dice2.setImageResource(R.drawable.two);
-                break;
-            case 3: dice2.setImageResource(R.drawable.three);
-                break;
-            case 4: dice2.setImageResource(R.drawable.four);
-                break;
-            case 5: dice2.setImageResource(R.drawable.five);
-                break;
-            case 6: dice2.setImageResource(R.drawable.six);
-                break;
-        }
+
+        String dice1img = "dice_"+diceValue1;
+        String dice2img = "dice_"+diceValue2;
+
+        int id1 = getResources().getIdentifier(dice1img,"drawable",getPackageName());
+        int id2 = getResources().getIdentifier(dice2img,"drawable",getPackageName());
+
+        dice1.setImageResource(id1);
+        dice2.setImageResource(id2);
+
     }
 
     public void onReplayGame(View view) { onGame(); }
