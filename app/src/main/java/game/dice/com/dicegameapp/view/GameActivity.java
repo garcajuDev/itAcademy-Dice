@@ -1,21 +1,25 @@
 package game.dice.com.dicegameapp.view;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import game.dice.com.dicegameapp.application.GameController;
 
 public class GameActivity extends AppCompatActivity {
 
-    GameController gameControl = new GameController();
+    GameController gameControl ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        gameControl = new GameController();
 
         onShowPlayerName();
         onGame();
@@ -23,9 +27,15 @@ public class GameActivity extends AppCompatActivity {
 
     private void onGame() {
         TextView resultView = findViewById(R.id.txtResult);
-        gameControl.createPlayer(getIntent().getExtras().getString("userName"));
+        String name = getIntent().getExtras().getString("userName");
 
-        int[] game = gameControl.playGame();
+        if(gameControl.existPlayer(name) == true){
+            gameControl.createPlayer(name);
+            Toast.makeText(this, "New player created!", Toast.LENGTH_LONG )
+                    .show();
+        }
+
+        int[] game = gameControl.playGame(name);
         int dice1Value = game[0]; int dice2Value = game[1];
 
         onShowDice1(dice1Value);

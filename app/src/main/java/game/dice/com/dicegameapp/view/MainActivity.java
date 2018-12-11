@@ -12,8 +12,6 @@ import game.dice.com.dicegameapp.application.GameController;
 
 public class MainActivity extends AppCompatActivity {
 
-    GameController controller = new GameController();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,11 +21,6 @@ public class MainActivity extends AppCompatActivity {
     public void startGame(View View){
         TextView namePlayer = findViewById(R.id.txtNamePlayer);
         String name = namePlayer.getText().toString();
-
-        if (controller.existPlayer(name) == true)
-            Toast.makeText(this, "New player created!", Toast.LENGTH_LONG )
-                    .show();
-
 
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("userName", name);

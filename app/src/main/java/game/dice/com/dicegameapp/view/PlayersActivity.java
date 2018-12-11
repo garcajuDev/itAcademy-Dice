@@ -1,9 +1,11 @@
 package game.dice.com.dicegameapp.view;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -25,6 +27,19 @@ public class PlayersActivity extends AppCompatActivity {
         recyclerPlayers.setLayoutManager(new LinearLayoutManager(this));
 
         PlayersAdapter adapter = new PlayersAdapter(playersList);
+
+        adapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = ""+ playersList.get(recyclerPlayers.getChildAdapterPosition(view));
+
+                Intent intent = new Intent(getApplicationContext(), GamePlayer.class);
+                intent.putExtra("name", name);
+
+                startActivity(intent);
+            }
+        });
+
         recyclerPlayers.setAdapter(adapter);
     }
 }

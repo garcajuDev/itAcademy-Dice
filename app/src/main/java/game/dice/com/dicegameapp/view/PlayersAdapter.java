@@ -9,9 +9,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersHolder> {
+public class PlayersAdapter
+        extends RecyclerView.Adapter<PlayersAdapter.PlayersHolder>
+        implements View.OnClickListener{
 
     ArrayList<String> playersList;
+    private View.OnClickListener listener;
 
     public PlayersAdapter(ArrayList<String> playersList){
         this.playersList = playersList;
@@ -21,6 +24,8 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersH
     public PlayersHolder onCreateViewHolder(ViewGroup parent, int i) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_players,null , false);
+
+        view.setOnClickListener(this);
         return new PlayersHolder(view);
     }
 
@@ -36,6 +41,7 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersH
     }
 
     public class PlayersHolder extends RecyclerView.ViewHolder {
+
         TextView name;
         ImageView photo;
         public PlayersHolder(View itemView) {
@@ -43,5 +49,14 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersH
             name = itemView.findViewById(R.id.txtPlayerName);
             photo = itemView.findViewById(R.id.imgPhotoUser);
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (listener != null) listener.onClick(view);
+    }
+
+    public void setOnClickListener(View.OnClickListener listener) {
+        this.listener = listener;
     }
 }

@@ -1,5 +1,6 @@
 package game.dice.com.dicegameapp.application;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import game.dice.com.dicegameapp.domain.*;
@@ -23,74 +24,51 @@ public class GameController {
         repository.addPlayer(player);
 	}
 
-	public String getPlayerName() {
-		List<Player> playerList = repository.getRepository();
-		if (playerList.isEmpty())System.out.println("empty repository!");
-		for (Player player : playerList) {
-			if (player.getName().equals(this.player.getName())) return player.getName();
+	public Player getPlayer(String name){
+		ArrayList<Player> cloneRepository = repository.getRepository();
+
+		for (Player plyr : cloneRepository){
+			if (plyr.getName().equals(name)) {
+				this.player = plyr;
+				return this.player;
+			}
 		}
-			return "";
+		return null;
 	}
 
-
-
-	/*public void printPlayersName(){
-        List<Player> playerList = repository.getRepository();
-        for (Player player : playerList){
-            System.out.println(player.getName());
-        }
-    }*/
-
-    /*public void printGame(){
-	    String resultGame = this.getPlayerGame();
-
-	    System.out.println(resultGame);
-    }*/
-
-	/* public void printGames(){
-		String resultGame = this.getPlayerGamesToString();
-
-		//System.out.println(resultGame);
-	}
-
-	public void printPlayerRanking(){
-		double ranking = this.getPlayerRanking();
-		//System.out.println("Wins average: " + ranking + "%");
-	}
 	/*
 	* run the game
 	*/
-	public int[] playGame() {
-        Game game = new Game();
-        int[] data = {0,0,0};
+	public int[] playGame(String name) {
+		Game game = new Game();
+		this.player = getPlayer(name);
+		int[] data = {0,0,0};
 		boolean hasWon = game.playGame();
 
 		data[0] = game.getDice1Value(); data[1] = game.getDice2Value();
 		if (hasWon == true) data[2] = 1; else data[2] = 0;
-
 		this.player.addGame(game);
 
-			return data;
+		return data;
 	}
-
-	public String getPlayerGame(){
-        List<Game> games = this.player.getAllGames();
-        Game lastGame = games.get(games.size()-1);
-
-        	return "SUMA: " +  lastGame.getSumDices() + " RESULTAT: " + lastGame.hasWon();
-    }
 
 	/*
 	* Convert the last player stats to a string
 	*/
-	public String getPlayerGamesToString() {
+	public ArrayList<String> getPlayerGamesToList(String name) {
+		this.player = getPlayer(name);
 		String text = "";
 		List<Game> games = this.player.getAllGames();
+		List<String> sendGames = new ArrayList<>();
 
 		for (Game game : games) {
-			text += "SUMA: " + game.getSumDices() + " RESULTAT: " + game.hasWon() + "\n";
+			if (game.getStatus() == true) text = "" + game.getDice1Value() + " | " + game.getDice2Value()
+					+ " | WIN!";
+			else text = "" + game.getDice1Value() + " | " + game.getDice2Value()
+					+ " | LOSE";
+			sendGames.add(text);
 		}
-			return text;
+		return (ArrayList) sendGames;
 	}
 
 	/*
@@ -110,7 +88,7 @@ public class GameController {
 	public boolean existPlayer(String name) {
 		if (repository.playerExists(name) == false) return true;
 
-			return false;
+		return false;
 	}
 
 	public ArrayList<String> playersList(){

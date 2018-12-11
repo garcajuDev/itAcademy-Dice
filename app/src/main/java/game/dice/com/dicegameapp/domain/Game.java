@@ -4,6 +4,7 @@ public class Game {
 
 	private Dice dice1 = new Dice();
 	private Dice dice2 = new Dice();
+	private boolean gameStatus = false;
 	
 	public Game(){
 		
@@ -17,8 +18,10 @@ public class Game {
 	public boolean playGame() {
 		dice1.rollDice();
 		dice2.rollDice();
-		
-		return hasWon();
+
+		this.gameStatus = hasWon();
+
+		return this.gameStatus;
 	}
 	
 	public int getSumDices(){ return dice1.getValue()+dice2.getValue(); }
@@ -29,5 +32,7 @@ public class Game {
 
 		return false;
 	}
+
+	public boolean getStatus(){ return this.gameStatus; }
 
 }
