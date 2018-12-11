@@ -1,6 +1,5 @@
 package game.dice.com.dicegameapp.application;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import game.dice.com.dicegameapp.domain.*;
@@ -62,10 +61,10 @@ public class GameController {
 		List<String> sendGames = new ArrayList<>();
 
 		for (Game game : games) {
-			if (game.getStatus() == true) text = "" + game.getDice1Value() + " | " + game.getDice2Value()
-					+ " | WIN!";
-			else text = "" + game.getDice1Value() + " | " + game.getDice2Value()
-					+ " | LOSE";
+			if (game.getStatus() == true) text = "Dice 1 result: " + game.getDice1Value() + " | Dice 2 result: " + game.getDice2Value()
+					+ " | Game status: WIN :-D";
+			else text = "Dice 1 result: " + game.getDice1Value() + " | Dice 2 result: " + game.getDice2Value()
+					+ " | Game status: Lose :-(";
 			sendGames.add(text);
 		}
 		return (ArrayList) sendGames;
@@ -74,7 +73,8 @@ public class GameController {
 	/*
 	* Get the player's stats from the repository
 	*/
-	public double getPlayerRanking() {
+	/*public double getPlayerRanking(String name) {
+		this.player = getPlayer(name);
 		List<Game> games = this.player.getAllGames();
 
 		double wins = 0.0;
@@ -83,7 +83,7 @@ public class GameController {
 				wins++;
 		}
 		return wins*100 / games.size();
-	}
+	}*/
 
 	public boolean existPlayer(String name) {
 		if (repository.playerExists(name) == false) return true;
@@ -92,10 +92,15 @@ public class GameController {
 	}
 
 	public ArrayList<String> playersList(){
+		this.player = new Player("");
 		List<String> playersName = new ArrayList<>();
 		List<Player> playersrepository = repository.getRepository();
 
-		for (Player player : playersrepository) playersName.add(player.getName());
+		for (Player plyr : playersrepository) {
+			this.player = plyr;
+			playersName.add(this.player.getName() + " | "
+					+ this.player.getPlayerRanking() + " %");
+		}
 
 			return (ArrayList<String>) playersName;
 	}

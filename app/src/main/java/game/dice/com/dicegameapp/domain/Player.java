@@ -23,4 +23,13 @@ public class Player {
 	public void addGame(Game game){ games.add(game); }
 
 	public List<Game> getAllGames() { return games; }
+
+	public double getPlayerRanking() {
+		double wins = 0.0;
+		for (Game game : games) {
+			if (game.hasWon())
+				wins++;
+		}
+		return (double)Math.round((wins*100 / games.size()) * 100d) / 100d;
+	}
 }

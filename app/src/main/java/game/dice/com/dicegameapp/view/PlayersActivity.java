@@ -31,7 +31,9 @@ public class PlayersActivity extends AppCompatActivity {
         adapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = ""+ playersList.get(recyclerPlayers.getChildAdapterPosition(view));
+                String rawName = ""+ playersList.get(recyclerPlayers.getChildAdapterPosition(view));
+                int endNamePositition = rawName.indexOf('|')-1;
+                String name = rawName.substring(0, endNamePositition);
 
                 Intent intent = new Intent(getApplicationContext(), GamePlayer.class);
                 intent.putExtra("name", name);
